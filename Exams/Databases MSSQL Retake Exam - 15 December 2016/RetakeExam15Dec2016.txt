@@ -1,0 +1,55 @@
+begin tran
+
+CREATE TABLE Locations
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Latitude FLOAT,
+	Longitude FLOAT
+)
+
+CREATE TABLE Credentials
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Email VARCHAR(30),
+	Password VARCHAR(30)
+)
+
+CREATE TABLE Users
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Nickname VARCHAR(25),
+	Gender CHAR(1),
+	Age INT,
+	LocationID INT, 
+	CredentialID INT UNIQUE,
+	CONSTRAINT FK_Users_Locations FOREIGN KEY (LocationID) REFERENCES Locations(ID),
+	CONSTRAINT FK_Users_Credentials FOREIGN KEY (CredentialID) REFERENCES Credentials(ID)
+)
+
+CREATE TABLE Chats
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Title VARCHAR(32),
+	StartDate DATE,
+	IsActive BIT
+)
+
+CREATE TABLE Messages
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Content VARCHAR(200),
+	SentOn DATE,
+	ChatId INT,
+	UserId INT,
+	CONSTRAINT FK_Messages_Chats FOREIGN KEY (ChatId) REFERENCES Chats(ID),
+	CONSTRAINT FK_Messages_Users FOREIGN KEY (UserId) REFERENCES Users(ID),
+)
+
+CREATE TABLE UsersChats
+(
+	ChatId INT REFERENCES Chats(Id),
+    UserId INT REFERENCES Users(Id),
+    PRIMARY KEY (ChatId, UserId)
+)
+
+rollback;
