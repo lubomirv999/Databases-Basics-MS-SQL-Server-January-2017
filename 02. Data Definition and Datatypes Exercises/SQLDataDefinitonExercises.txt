@@ -1,0 +1,371 @@
+TASK 4
+INSERT INTO Towns (Id, Name)
+VALUES
+(1, 'Sofia'),
+(2, 'Plovdiv'),
+(3, 'Varna')
+
+INSERT INTO Minions (Id, Name, Age, TownId)
+VALUES
+(1, 'Kevin', 22, 1),
+(2, 'Bob', 15, 2),
+(3, 'Steward', NULL, 3)
+
+TASK 7 
+CREATE TABLE People
+(
+	Id int PRIMARY KEY IDENTITY NOT NULL,
+	Name nvarchar(200) NOT NULL,
+	Picture varbinary(max),
+	Height decimal(10, 2),
+	Weight decimal(10, 2),
+	Gender nvarchar(1) CHECK (Gender = 'm' OR Gender = 'f'),
+	Birthdate date NOT NULL,
+	Biography text
+)
+
+INSERT INTO People(Name, Gender, Birthdate)
+VALUES
+('Ivan', 'm', '2016-Dec-20'),
+('Pesho', 'f', '1999-Mar-20'),
+('Kiro', 'm', '1986-Dec-20'),
+('Maria', 'f', '2011-Jul-20'),
+('Petkan', 'm', '2005-Aug-20')
+
+TASK 8
+CREATE TABLE Users
+(
+	Id bigint PRIMARY KEY IDENTITY NOT NULL,
+	Username varchar(30) UNIQUE NOT NULL,
+	Password varchar(26) NOT NULL,
+	ProfilePicture varbinary(max) CHECK (DATALENGTH(ProfilePicture) < 900 * 1024),
+	LastLoginTime date,
+	IsDeleted varchar CHECK (IsDeleted = 'true' OR IsDeleted = 'false')
+)
+
+INSERT INTO Users(Username, Password)
+VALUES
+('Pesho', 'Parola'),
+('Ivan', 'ParolataNaIvan'),
+('Maria', '1234'),
+('Dragan', '12454365'),
+('Kiro', '1234124')
+
+TASK 11
+ALTER TABLE Users 
+ADD CONSTRAINT DT_LastLoginTime
+DEFAULT GETDATE() FOR LastLoginTime
+
+TASK 13
+CREATE TABLE Directors
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	DirectorName nvarchar(50) NOT NULL,
+	Notes nvarchar(255)
+)
+
+INSERT INTO Directors(DirectorName)
+VALUES
+('Ivan'),
+('Pesho'),
+('Kiro'),
+('Maria'),
+('Petkan')
+
+CREATE TABLE Genres
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	GenreName nvarchar(50) NOT NULL,
+	Notes nvarchar(255)
+)
+
+INSERT INTO Genres(GenreName)
+VALUES
+('Action'),
+('Comedy'),
+('Adventurous'),
+('Historical'),
+('Drama')
+
+CREATE TABLE Categories
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	CategoryName nvarchar(50) NOT NULL,
+	Notes nvarchar(255)
+)
+
+INSERT INTO Categories(CategoryName)
+VALUES
+('Action'),
+('Comedy'),
+('Adventurous'),
+('Historical'),
+('Drama')
+
+CREATE TABLE Movies
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	Title nvarchar(50) NOT NULL,
+	DirectorId int NOT NULL,
+	CopyrightYear date,
+	Length time,
+	GenreId int NOT NULL,
+	CategoryId int NOT NULL,
+	Rating tinyint,
+	Notes nvarchar(255)
+)
+
+INSERT INTO Movies(Title, DirectorId, GenreId, CategoryId)
+VALUES
+('FirstMovie', 1, 1, 1),
+('Fast5', 2, 3, 4),
+('JackSparrow', 3, 1, 2),
+('SomeMovie', 2, 2, 1),
+('Indiana Jones', 4, 1, 5)
+
+TASK 14
+CREATE TABLE Categories
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	Category nvarchar(50) NOT NULL,
+	DailyRate money,
+	WeeklyRate money,
+	MonthlyRate money,
+	WeekendRate money
+)
+
+INSERT INTO Categories(Category)
+VALUES
+('New'),
+('Brand New'),
+('Old')
+
+CREATE TABLE Cars
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	PlateNumber nvarchar(50) NOT NULL,
+	Make date,
+	Model nvarchar(50),
+	CarYear date,
+	CategoryId int NOT NULL,
+	Doors nvarchar(50),
+	Picture varbinary(max),
+	Condition nvarchar(50),
+	Available nvarchar(50)
+)
+
+INSERT INTO Cars(PlateNumber, CategoryId)
+VALUES
+('CA1365BO','1'),
+('WA1365CD','2'),
+('LX1365MN','3')
+
+CREATE TABLE Employees 
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	FirstName nvarchar(50) NOT NULL,
+	LastName  nvarchar(50) NOT NULL,
+	Title nvarchar(50),
+	Notes text
+)
+
+INSERT INTO Employees(FirstName, LastName)
+VALUES
+('Ivan','Ivanov'),
+('Pesho','Peshov'),
+('Test','Testov')
+
+CREATE TABLE Customers  
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	DriverLicenceNumber nvarchar(50) NOT NULL,
+	FullName  nvarchar(50) NOT NULL,
+	Address nvarchar(50) NOT NULL,
+	City nvarchar(50),
+	ZIPCode nvarchar(50),
+	Notes text
+)
+
+INSERT INTO Customers(DriverLicenceNumber, FullName, Address)
+VALUES
+('CB1365BO','Petyr Ivanov','Benkovksa'),
+('WS1365CD','Miro Mirev','Osvoboshedenie'),
+('LO1365MN','Kiro Kirov','Opylchenska')
+
+CREATE TABLE RentalOrders  
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	EmployeeId int NOT NULL,
+	CustomerId  int NOT NULL,
+	CarId int NOT NULL,
+	CarCondition nvarchar(50),
+	TankLevel nvarchar(50),
+	KilometrageStart nvarchar(50),
+	KilometrageEnd nvarchar(50),
+	TotalKilometrage nvarchar(50),
+	StartDate date,
+	EndDate date,
+	TotalDays nvarchar(50),
+	RateApplied money,
+	TaxRate money,
+	OrderStatus nvarchar(50),
+	Notes text
+)
+
+INSERT INTO RentalOrders(EmployeeId, CustomerId, CarId)
+VALUES
+('1','2','3'),
+('2','5','4'),
+('3','3','2')
+
+TASK 15
+CREATE TABLE Employees
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	FirstName nvarchar(50) NOT NULL,
+	LastName nvarchar(50) NOT NULL,
+	Title nvarchar(50),
+	Notes text
+)
+
+INSERT INTO Employees(FirstName, LastName)
+VALUES
+('Ivan','Ivanov'),
+('Maria','Kirova'),
+('Kiro','Marinov')
+
+CREATE TABLE Customers
+(
+	AccountNumber int IDENTITY PRIMARY KEY NOT NULL,
+	FirstName nvarchar(50) NOT NULL,
+	LastName nvarchar(50) NOT NULL,
+	PhoneNumber tinyint,
+	EmergencyName nvarchar(50),
+	EmergencyNumber tinyint,
+	Notes text
+)
+
+INSERT INTO Customers(FirstName, LastName)
+VALUES
+('Miro','Ivanov'),
+('Petyr','Kirov'),
+('Maria','Marinova')
+
+CREATE TABLE RoomStatus 
+(
+	RoomStatus nvarchar(50) PRIMARY KEY NOT NULL,
+	Notes text
+)
+
+INSERT INTO RoomStatus(RoomStatus)
+VALUES
+('free'),
+('occupied'),
+('using')
+
+CREATE TABLE RoomTypes 
+(
+	RoomType nvarchar(50) PRIMARY KEY NOT NULL,
+	Notes text
+)
+
+INSERT INTO RoomTypes(RoomType)
+VALUES
+('TwoBed'),
+('ThreeBed'),
+('Apartment')
+
+CREATE TABLE BedTypes 
+(
+	BedType nvarchar(50) PRIMARY KEY NOT NULL,
+	Notes text
+)
+
+INSERT INTO BedTypes(BedType)
+VALUES
+('small'),
+('big'),
+('wedding')
+
+CREATE TABLE Rooms 
+(
+	RoomNumber int IDENTITY PRIMARY KEY NOT NULL,
+	RoomType nvarchar(50) NOT NULL,
+	BedType nvarchar(50) NOT NULL,
+	Rate money,
+	RoomStatus nvarchar(50),
+	Notes text
+)
+
+INSERT INTO Rooms(RoomType, BedType)
+VALUES
+('TwoBed','small'),
+('ThreeBed','big'),
+('Apartment','small')
+
+CREATE TABLE Payments 
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	EmployeeId int NOT NULL,
+	PaymentDate date,
+	AccountNumber int,
+	FirstDateOccupied date,
+	LastDateOccupied date,
+	TotalDays int,
+	AmountCharged money,
+	TaxRate money,
+	TaxAmount money,
+	PaymentTotal money,
+	Notes text
+)
+
+INSERT INTO Payments(EmployeeId)
+VALUES
+(1),
+(2),
+(3)
+
+CREATE TABLE Occupancies 
+(
+	Id int IDENTITY PRIMARY KEY NOT NULL,
+	EmployeeId int NOT NULL,
+	DateOccupied date,
+	AccountNumber int,
+	RoomNumber int,
+	RateApplied money,
+	PhoneCharge money,
+	Notes text
+)
+
+INSERT INTO Occupancies(EmployeeId)
+VALUES
+(3),
+(2),
+(5)
+
+TASK 20
+SELECT * FROM Towns ORDER BY Name ASC
+SELECT * FROM Departments ORDER BY Name ASC 
+SELECT * FROM Employees ORDER BY Salary DESC 
+
+TASK 21
+SELECT Name FROM Towns ORDER BY Name ASC
+SELECT Name FROM Departments ORDER BY Name ASC
+SELECT FirstName, LastName, JobTitle, Salary FROM Employees ORDER BY Salary DESC
+
+TASK 22
+UPDATE Employees
+SET Salary = (Salary / 100) * 10 + Salary
+SELECT Salary FROM Employees
+
+UPDATE Employees
+SET Salary *= 1.1
+SELECT Salary FROM Employees
+
+TASK 23 
+UPDATE Payments
+SET TaxRate = TaxRate - TaxRate * 0.3
+SELECT TaxRate FROM Payments 
+
+TASK 24
+TRUNCATE TABLE Occupancies
